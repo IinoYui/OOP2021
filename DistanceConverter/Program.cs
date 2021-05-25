@@ -9,27 +9,30 @@ namespace DistanceConverter {
         static void Main(string[] args) {
             if (args.Length >= 1 && args[0] == "-tom") {
                 //フィートからメートルへの対応表を出力
-                for (int feet = 1; feet <= 10; feet++) {
-                    double meter = FeetToMeter(feet);
-                    Console.WriteLine("{0} ft = {1:0.0000}m", feet, meter);
-                }
+                PrintFeetToMeterList(1, 10);
             } else {
                 //メートルからフィートへの対応表を出力
-                for (int meter = 1; meter <= 10; meter++) {
-                    double feet = MeterToFeet(meter);
-                    Console.WriteLine("{0}m = {1:0.0000} ft", meter, feet);
-                }
+                PrintMeterToFeetList(1, 10);
             }
         }
 
-        //フィートからメートルを求める
-        private static double FeetToMeter(int feet) {
-            return feet * 0.3048;
+        //フィールからメートルへの対応表を出力
+        private static void PrintFeetToMeterList(int start, int stop) {
+            FeetConverter converter = new FeetConverter();
+            for (int feet = start; feet <= start; feet++) {
+                double meter = converter.ToMeter(feet);
+                Console.WriteLine("{0} ft = {1:0.0000}m", feet, meter);
+            }
         }
 
-        //メートルからフィートを求める
-        private static double MeterToFeet(int meter) {
-            return meter / 0.3048;
+        //メートルからフィートへの対応表を出力
+        private static void PrintMeterToFeetList(int start, int stop) {
+            FeetConverter converter = new FeetConverter();
+            for(int meter = start; meter <= stop; meter++) {
+                double feet = converter.FromMeter(meter);
+                Console.WriteLine("{0} m = {1:0.0000} m", meter, feet);
+            }
         }
+    
     }
 }
