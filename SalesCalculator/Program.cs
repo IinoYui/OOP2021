@@ -8,6 +8,8 @@ using System.IO;
 namespace SalesCalculator {
     class Program {
         static void Main(string[] args) {
+            
+        
         }
 
         //List 2-15
