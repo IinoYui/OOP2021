@@ -7,8 +7,8 @@ using System.Threading.Tasks;
 
 namespace SalesCalculator {
     //売上請求データ
-    class SalesCounter {
-        private List<Sale> _sales;
+    public class SalesCounter {
+        private IEnumerable<Sale> _sales;
 
         //コンストラクタ
         public SalesCounter(string filePath) {
@@ -17,12 +17,12 @@ namespace SalesCalculator {
 
         //List 2-15
         //売上データを読み込み、Saleオブジェクトのリストを返す
-        private static List<Sale> ReadSales(string filePath) {
-            List<Sale> sales = new List<Sale>();
-            string[] lines = File.ReadAllLines(filePath);
-            foreach (string line in lines) {
-                string[] items = line.Split(',');
-                Sale sale = new Sale {
+        private static IEnumerable<Sale> ReadSales(string filePath) {
+            var sales = new List<Sale>();
+            var lines = File.ReadAllLines(FilePath);
+            foreach (var line in lines) {
+                var items = line.Split(',');
+                var sale = new Sale {
                     ShopName = items[0],
                     ProductCategory = items[1],
                     Amount = int.Parse(items[2])
@@ -34,8 +34,8 @@ namespace SalesCalculator {
 
             //List 2-17
             //店舗売り上げを求める
-            public Dictionary<string, int> GetPerStoreSales() {
-            Dictionary<String, int> dict = new Dictionary<string, int>();
+            public IDictionary<string, int> GetPerStoreSales() {
+            var dict = new Dictionary<string, int>();
             foreach(Sale sale in _sales) {
                 if(dict.ContainsKey(sale.ShopName))
                     //既にコレクションへ店舗が登録されている
