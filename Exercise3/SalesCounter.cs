@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace SalesCalculator {
+namespace Exercise3{
     //売上請求データ
     public class SalesCounter {
         private IEnumerable<Sale> _sales;
@@ -34,7 +34,7 @@ namespace SalesCalculator {
 
             //List 2-17
             //店舗売り上げを求める
-            public IDictionary<string, int> GetPerStoreSales() {
+            public IDictionary<string, int> GetPerShopSales() {
             var dict = new Dictionary<string, int>();
             foreach(Sale sale in _sales) {
                 if(dict.ContainsKey(sale.ShopName))
@@ -43,6 +43,19 @@ namespace SalesCalculator {
                 else
                     //コレクションへ店舗を登録
                     dict[sale.ShopName] = sale.Amount; 
+            }
+            return dict;
+        }
+        //商品カテゴリ店舗別売り上げを求める
+         public IDictionary<string, int> GetPerCategorySales() {
+            var dict = new Dictionary<string, int>();
+            foreach(Sale sale in _sales) {
+                if (dict.ContainsKey(sale.ProductCategory))
+                    //既にコレクションへ店舗が登録されている
+                    dict[sale.ProductCategory] += sale.Amount;
+                else
+                    //コレクションへ店舗を登録
+                    dict[sale.ProductCategory] = sale.Amount;
             }
             return dict;
         }
