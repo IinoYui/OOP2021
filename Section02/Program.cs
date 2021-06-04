@@ -26,8 +26,19 @@ namespace Section02 {
 
             // 3.2.4
             Exercise2_4(names);
+
+            //できた人問題
+            Exercise2_5(names);
+            Console.WriteLine();
         }
 
+        private static void Exercise2_5(List<string> names) {
+            int count = 0;
+            foreach (var name in names) {
+               count += name.Count(c => char.IsLower(c));
+            }
+            Console.WriteLine(count);
+        }
         //入力して出す
         private static void Exercise2_1(List<string> names) {
             Console.WriteLine("都市名を入力＞");
