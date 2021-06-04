@@ -53,14 +53,17 @@ namespace Section01 {
             var query = numbers.Where(n => n >=  50);
             foreach (int n in query)
                 Console.WriteLine(n);
+
+            //上の文と同じ意味↑
+            //numbers.Where(n => n >= 50).ToList().ForEach(Console.WriteLine);
         }
 
 
         //値を2倍にする
         private static void Exercise1_4(List<int> numbers) {
-            var query = numbers.Select(n => n == n * 2);
+            var query = numbers.Select(n => n * 2);
             foreach (var n in query)
-                Console.Write(n);
+                Console.WriteLine(n);
         }
     }
 }
