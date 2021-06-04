@@ -10,6 +10,7 @@ namespace Section01 {
 
             var numbers = new List<int> { 12, 87, 94, 14, 53, 20, 40, 35, 76, 91, 31, 17, 48 };
 
+
             // 3.1.1
             Exercise1_1(numbers);
             Console.WriteLine("-----");
