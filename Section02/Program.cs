@@ -32,13 +32,6 @@ namespace Section02 {
             Console.WriteLine();
         }
 
-        private static void Exercise2_5(List<string> names) {
-            int count = 0;
-            foreach (var name in names) {
-               count += name.Count(c => char.IsLower(c));
-            }
-            Console.WriteLine(count);
-        }
         //入力して出す
         private static void Exercise2_1(List<string> names) {
             Console.WriteLine("都市名を入力＞");
@@ -67,6 +60,16 @@ namespace Section02 {
                              .Select(s => s.Length);
             foreach (int s in query)
                 Console.WriteLine(s);
+        }
+
+
+        //できた人問題
+       private static void Exercise2_5(List<string> names) {
+            int count = 0;
+            foreach (var name in names) {
+               count += name.Count(c => char.IsLower(c));
+            }
+            Console.WriteLine(count);
         }
     }
 }
