@@ -3,18 +3,17 @@ using System.IO;
 
 namespace Test01 {
     class ScoreCounter {
+        //科目別点数集計データ
         private IEnumerable<Student> _score;
 
         // コンストラクタ
         public ScoreCounter(string filePath) {
             _score = ReadScore(filePath);
-
-
-            
         }
 
 
         //メソッドの概要： 
+        //点数データを読み込み、Studentオブジェクトのリストを返す
         private static IEnumerable<Student> ReadScore(string filePath) {
             var score = new List<Student>();
             var lines = File.ReadAllLines(filePath);
@@ -32,6 +31,7 @@ namespace Test01 {
         }
 
         //メソッドの概要： 
+        //科目ごとの点数集計を表示する
         public IDictionary<string, int> GetPerStudentScore() {
             var dict = new Dictionary<string, int>();
             foreach(Student student in _score) {
