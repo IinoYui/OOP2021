@@ -35,10 +35,14 @@ namespace Test02 {
 
         //問題１　合計値を表示
         //　　　　出力結果【618】
-        private static void Exercise01(List<int> numbers) {
-
-
-
+        private static int Exercise01(List<int> numbers) {
+            int counter = 0;
+            foreach(var n in numbers) {
+                if (n == counter)
+                    counter++;
+            }
+            Console.WriteLine(counter);
+            return counter;
         }
 
         //問題２　偶数の最大値を表示
@@ -59,7 +63,9 @@ namespace Test02 {
         //問題４　10以上50以下の数字のみを表示（即時実行でも可とする）
         //　　　　出力結果【12 14 20 40 35 31 17 48】
         private static void Exercise04(List<int> numbers) {
-
+            var count = numbers.Count(n => 10 <= n && n <= 50);
+            foreach (var n in count)
+                Console.WriteLine(n);
 
 
         }
