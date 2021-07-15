@@ -28,25 +28,20 @@ namespace StopWatch {
 
         }
         
-
-        //tmdispをスタートさせる
-        //idTimerDispの表示を変える
         private void Startbt_Click(object sender, EventArgs e) {
-            sw.Start();
-            tmdisp.Start();
+            sw.Start();   //ストップウォッチスタート
+            tmdisp.Start();  //画面更新用のタイマースタート
         }
 
         private void Resetbt_Click(object sender, EventArgs e) {
-            sw.Reset();
+            sw.Reset();  //画面更新用のタイマーリセット
             ldTimerDisp.Text = sw.Elapsed.ToString(@"hh\:mm\:ss\.ff");
 
         }
 
-        //tmdispをストップさせる
-        //idTimerDispの表示を変える
         private void Stopbt_Click(object sender, EventArgs e) {
-            sw.Stop();
-            tmdisp.Stop();
+            sw.Stop();   //ストップウォッチストップ
+            tmdisp.Stop();  //画面更新用のタイマーストップ
         }
 
         private void Lapbt_Click(object sender, EventArgs e) {
