@@ -78,6 +78,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "CarReportSystem", "CarRepor
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CarReportSystem", "CarReportSystem\CarReportSystem\CarReportSystem.csproj", "{3A4FF997-6D75-408A-BCDB-7E09FD779098}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sample0823", "Sample0823\Sample0823.csproj", "{68D87443-6A4F-431E-9E1B-38699ED07786}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -180,6 +182,10 @@ Global
 		{3A4FF997-6D75-408A-BCDB-7E09FD779098}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3A4FF997-6D75-408A-BCDB-7E09FD779098}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{3A4FF997-6D75-408A-BCDB-7E09FD779098}.Release|Any CPU.Build.0 = Release|Any CPU
+		{68D87443-6A4F-431E-9E1B-38699ED07786}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{68D87443-6A4F-431E-9E1B-38699ED07786}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{68D87443-6A4F-431E-9E1B-38699ED07786}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{68D87443-6A4F-431E-9E1B-38699ED07786}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
