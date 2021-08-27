@@ -87,6 +87,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Chapter11", "Chapter11", "{
 		..\..\..\Downloads\novelists.xml = ..\..\..\Downloads\novelists.xml
 	EndProjectSection
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Exercise1", "Chapter11\Exercise1\Exercise1.csproj", "{B1DEB1E5-50A2-4B73-BDA0-AA477A98D699}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -197,6 +199,10 @@ Global
 		{084AF93E-6605-4872-AC40-96F26517F08E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{084AF93E-6605-4872-AC40-96F26517F08E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{084AF93E-6605-4872-AC40-96F26517F08E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B1DEB1E5-50A2-4B73-BDA0-AA477A98D699}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B1DEB1E5-50A2-4B73-BDA0-AA477A98D699}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B1DEB1E5-50A2-4B73-BDA0-AA477A98D699}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B1DEB1E5-50A2-4B73-BDA0-AA477A98D699}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -230,6 +236,7 @@ Global
 		{24E0FC23-4ACF-4879-8050-01B109F969D2} = {47273694-9AC3-4584-A1E2-3CE60F2BA4B4}
 		{3A4FF997-6D75-408A-BCDB-7E09FD779098} = {AAEB1883-334E-4AE1-B504-87BDCBC0C033}
 		{084AF93E-6605-4872-AC40-96F26517F08E} = {58668D45-D396-4816-A2CB-5A18941843CD}
+		{B1DEB1E5-50A2-4B73-BDA0-AA477A98D699} = {58668D45-D396-4816-A2CB-5A18941843CD}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {088477D0-E97D-4466-9728-7664CF75A50F}
