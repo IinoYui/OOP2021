@@ -46,7 +46,7 @@ namespace Exercise1
                 xdoc.Save(newfile);
             }
 
-        private static void Exercise1_1(object file)
+        private static void Exercise1_1(string file)
         {
                 var xdoc = XDocument.Load(file);
                 var sample1 = xdoc.Root.Elements();
@@ -58,7 +58,7 @@ namespace Exercise1
                 }
         }
 
-        private static void Exercise1_2(object file)
+        private static void Exercise1_2(string file)
         {
              var xdoc = XDocument.Load(file);
             var sample2 = xdoc.Root.Elements().OrderBy(x => (string)x.Element("firstplayed"));
@@ -69,7 +69,7 @@ namespace Exercise1
             }
         }
 
-        private static void Exercise1_3(object file)
+        private static void Exercise1_3(string file)
         {
                var xdoc = XDocument.Load(file);
                 var sample3 = xdoc.Root.Elements()
