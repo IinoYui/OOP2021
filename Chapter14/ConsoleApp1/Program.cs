@@ -21,26 +21,55 @@ namespace ConsoleApp1
         //コンストラクタ
         public Program()
         {
-            //DownloadString();
-            //DownloadfileAsync();
-            //OpenReadSample();
-            var results = GetWeatherReportFromYahoo(4610);
-            foreach (var s in results)
+            Console.WriteLine("地域コード入力");
+            Console.WriteLine("1：前橋\n2：みなかみ\n3：宇都宮\n4：水戸\n9：その他(直接入力)");
+            Console.Write(">");
+            int num = int.Parse(Console.ReadLine());
+
+            switch (num)
             {
-                Console.WriteLine(s);
-            }
-            Console.ReadLine();
+
+            case 1:
+                num = 4210;
+            break;
+            case 2:
+                num = 4220;
+            break;
+            case 3:
+                num = 4110;
+            break;
+            case 4:
+                num = 4010;
+            break;
+            case 9:
+                Console.WriteLine("コードを入力してください");
+                Console.Write(">");
+                num = int.Parse(Console.ReadLine());
+            break;
+            default:
+                    Console.WriteLine("正しく入力してください");
+                new Program();
+            break;
         }
 
-        public void DownloadString()
-        {
+        var results = GetWeatherReportFromYahoo(num);
+            foreach (var s in results){
+                Console.WriteLine(s);
+         }
+}
+
+
+
+        //リスト14.15
+        public void DownloadString() {
             var wc = new WebClient();
             wc.Encoding = Encoding.UTF8;
             var html = wc.DownloadString("https://www.yahoo.co.jp/");
             Console.WriteLine(html);
         }
-        private void DownloadFileAsync()
-        {
+
+        //リスト14.17
+        private void DownloadFileAsync() {
             var wc = new WebClient();
             var url = new Uri(@"C:\Users\hm32090\Downloads\OneDrive_1_2020-5-12.zip");
             var filename = @"C:\temp\example.zip";
@@ -63,9 +92,9 @@ namespace ConsoleApp1
             Console.WriteLine("ダウンロード完了");
         }
 
+        //リスト14.18
+        public void OpenReadSample() {
 
-        public void OpenReadSample()
-        {
             var wc = new WebClient();
             using (var stream = wc.OpenRead(@"https://yahoo.co.jp/"))
             using (var sr = new StreamReader(stream, Encoding.UTF8))
@@ -76,7 +105,7 @@ namespace ConsoleApp1
             }
         }
 
-
+        //リスト14.19
         private static IEnumerable<string> GetWeatherReportFromYahoo(int cityCode)
         {
             using (var wc = new WebClient())
