@@ -27,24 +27,20 @@ namespace RssReader
             setRssTitle(tbUrl.Text);
         }
 
-
         //指定したURL先からXMLデータを取得して、title要素を取得し、リストボックスへセットする
-        private void setRssTitle(string text)
+        private void setRssTitle(string uri)
         {
             using (var wc = new WebClient())
-            {
+            { 
                 wc.Headers.Add("Content-type", "charset=UTF-8");
-                var uriString = string.Format(
-                    @"http://rss.weather.yahoo.co.jp/rss/days/{0}.xml");
-                var url = new Uri(uriString);
+                var url = new Uri(uri);
                 var stream = wc.OpenRead(url);
 
                 XDocument xdoc = XDocument.Load(stream);
                 var nodes = xdoc.Root.Descendants("title");
                 foreach (var node in nodes)
                 {
-                    string s = Regex.Replace(node.Value, "【|】", "");
-                    yield return s;
+                    lbTitles.Items.Add(Regex.Replace(node.Value, "【｜】", ""));
                 }
             }
         }
