@@ -69,7 +69,7 @@ namespace RssReader
             this.btRead.Name = "btRead";
             this.btRead.Size = new System.Drawing.Size(106, 31);
             this.btRead.TabIndex = 3;
-            this.btRead.Text = "button1";
+            this.btRead.Text = "読み込み";
             this.btRead.UseVisualStyleBackColor = true;
             this.btRead.Click += new System.EventHandler(this.btRead_Click);
             // 
@@ -92,7 +92,6 @@ namespace RssReader
             this.Controls.Add(this.tbUrl);
             this.Controls.Add(this.Rss);
             this.Name = "Form1";
-            this.Text = "32089";
             this.ResumeLayout(false);
             this.PerformLayout();
 
