@@ -17,6 +17,7 @@ namespace RssReader
     {
         List<string> str = new List<string>();
         private object setRssTitles;
+        IEnumerable<ItemData> items = null;
 
         public Form1()
         {
@@ -36,20 +37,33 @@ namespace RssReader
                 wc.Headers.Add("Content-type", "charset=UTF-8");
                 var stream = wc.OpenRead(uri);
 
+
+
                 XDocument xdoc = XDocument.Load(stream);
-                var nodes = xdoc.Root.Descendants("item");
-                foreach (var node in nodes)
+                items = xdoc.Root.Descendants("item").Select(x => new ItemData
                 {
-                    lbTitles.Items.Add(node.Element("title").Value);
-                    str.Add(node.Element("link").Value);
+                    Title = (string)x.Element("title"),
+                    Link = (string)x.Element("link"),
+                    PubDate = (DateTime)x.Element("pubDate"),
+                    Description = (string)x.Element("description")
+                });
+
+                foreach (var item in items)
+                {
+                    lbTitles.Items.Add(item.Title);
                 }
+
             }
         }
 
         private void lbTitles_Click(object sender, EventArgs e)
         {
-            var lb = lbTitles.SelectedIndex;
-            wbBrowser.Url = new Uri(str[lb]);
+            string link = (items.ToArray())[lbTitles.SelectedIndex].Link;
+            wbBrowser.Url = new Uri(link);
+
+            lbDescription.Text = "概要\n";
+            lbDescription.Text = (items.ToArray())[lbTitles.SelectedIndex].Description;
         }
+
     }
 }
