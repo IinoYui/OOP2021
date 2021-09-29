@@ -3,7 +3,9 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.IO;
 using System.Linq;
+using System.Runtime.Serialization.Formatters.Binary;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -83,19 +85,19 @@ namespace CarReportSystem {
         private void dgvRegistDate_MouseClick(object sender, DataGridViewCellEventArgs e) {
             if (e.RowIndex == -1)
                 return;
-
+        
             //選択された行のデータの取得
             CarReport selectedCar = listCarReport[e.RowIndex];
 
-            //取得したいるデータ項目を各コントロールへ設定
+            //取得しているデータ項目を各コントロールへ設定
             dtpDate.Value = selectedCar.Date;
             cbAuther.Text = selectedCar.Auther;
             setMakerRadioButton(selectedCar.Maker);
             cbCarName.Text = selectedCar.CarName;
             tbReport.Text = selectedCar.Report;
             pbPicture.Image = selectedCar.Picture;
-        };
-        listCarReport.Add(CarReport);
+        }
+        
 
         private void setMakerRadioButton(CarReport.MakerGroup mg) {
             switch (mg) {
@@ -125,10 +127,54 @@ namespace CarReportSystem {
         }
 
         private void btDateCorrect_Click(object sender, EventArgs e) {
-            listCarReport[0].UpDate(dtpDate.Value, cbAuther.Text, 
+            listCarReport[dgvRegistDate.CurrentRow.Index].UpDate(dtpDate.Value, cbAuther.Text, 
                                     selectedGroup(),cbCarName.Text,
                                     tbReport.Text,pbPicture.Image);
 
+            dgvRegistDate.Refresh();   //コントロールの強制再評価
+        }
+
+        private void btSave_Click(object sender, EventArgs e) {
+            if(sfdFileSave.ShowDialog() == DialogResult.OK) {
+                var bf = new BinaryFormatter();
+                using (FileStream fs = File.Open(sfdFileSave.FileName, FileMode.Create)) {
+                    bf.Serialize(fs, listCarReport);
+                }
+            }
+        }
+
+        private void btOpen_Click(object sender, EventArgs e) {
+            if(ofdFileOpen.ShowDialog() == DialogResult.OK) {
+                try {
+                    //バイナリ形式でシリアル化
+                    var bf = new BinaryFormatter();
+                    using (FileStream fs = File.Open(ofdFileOpen.FileName, FileMode.Open, FileAccess.Read)) {
+                        //逆シリアル化して読み込む
+                        listCarReport = (BindingList<CarReport>)bf.Deserialize(fs);
+                        dgvRegistDate.DataSource = null;
+                        dgvRegistDate.DataSource = listCarReport;
+                    }
+                }
+                catch (Exception ex) {
+                    MessageBox.Show(ex.Message);
+                }
+                //読み込んだデータを各コンボボックスに登録する
+                foreach(var item in listCarReport) {
+                    setCbAuthor(item.Auther);
+                    setCbCarName(item.CarName);
+                }
+
+                /*　データグリッドビューから取得
+                for(int i = 0; i < length; i++) {
+                    setCbAuthor(dgvRegistData.Rows[i].Cells[1].Value.ToString());
+                    setCbCarName(dgvRegidtData.Rows[i].Cells[3].Value.ToString());
+                }*/
+            }
+        }
+
+        private void FormMain_Load(object sender, EventArgs e) {
+            dgvRegistDate.Columns[5].Visible = false;
         }
     }
 }
+
