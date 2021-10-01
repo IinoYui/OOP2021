@@ -1,0 +1,66 @@
+﻿using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Data;
+using System.Drawing;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Windows.Forms;
+
+namespace SendMail
+{
+    public partial class ConfigForm : Form
+    {
+        
+        //設定情報
+        private Settings settings = Settings.getInstance();
+
+        public ConfigForm()
+        {
+            InitializeComponent();
+        }
+
+        //デフォルトボタン
+        private void btDefault_Click(object sender, EventArgs e)
+        {
+            tbHost.Text = settings.sHost();//ホスト
+            tbPass.Text = settings.sPass();//パスワード
+            tbPort.Text = settings.sPort(); //ポート
+            tbUserName.Text = settings.sMailAddr();//ユーザー名
+            cbSsl.Checked = settings.bSsl(); //SSL
+            tbSender.Text = settings.sMailAddr();//送信元
+
+            //tbUserName.Text = settings.sUserName();
+        }
+
+        //キャンセルボタン
+        private void btCancel_Click(object sender, EventArgs e)
+        {
+            this.Close();
+        }
+
+        //OKボタン
+        private void btOk_Click(object sender, EventArgs e)
+        {
+            SettingRegist();
+            this.Close();
+        }
+
+        //適用ボタン
+        private void btApply_Click(object sender, EventArgs e)
+        {
+            SettingRegist();//送信データ登録
+        }
+
+        //送信データ登録
+        private void SettingRegist()
+        {
+            settings.Host = tbHost.Text;
+            settings.Pass = tbPass.Text;
+            settings.Port = int.Parse(tbPort.Text);
+            settings.MailAddr = tbUserName.Text;
+            settings.Ssl = cbSsl.Checked;
+        }
+    }
+}
