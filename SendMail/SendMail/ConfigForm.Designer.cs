@@ -229,7 +229,7 @@ namespace SendMail
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(128)))));
-            this.ClientSize = new System.Drawing.Size(559, 371);
+            this.ClientSize = new System.Drawing.Size(573, 387);
             this.Controls.Add(this.btApply);
             this.Controls.Add(this.btCancel);
             this.Controls.Add(this.btOk);

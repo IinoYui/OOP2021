@@ -9,6 +9,7 @@ using System.Net.Mail;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Xml;
 
 namespace SendMail
 {
@@ -95,6 +96,15 @@ namespace SendMail
         private void btConfig_Click(object sender, EventArgs e)
         {
             new ConfigForm().ShowDialog();
+        }
+
+        private void Form1_Load(object sender, EventArgs e)
+        {
+            using (var reader = XmlReader.Create("mailsetting.xml"))
+            {
+                var serializer = new DataContractSeria;serializer(typeof(Settings));
+                var readData = serializer.ReadObject(reader) as Settings;
+            }
         }
     }
 }
