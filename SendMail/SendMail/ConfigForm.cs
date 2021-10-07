@@ -4,6 +4,7 @@ using System.ComponentModel;
 using System.Data;
 using System.Drawing;
 using System.Linq;
+using System.Runtime.Serialization;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -45,21 +46,7 @@ namespace SendMail
         private void btOk_Click(object sender, EventArgs e)
         {
             SettingRegist();
-
-            var xws = new XmlWriterSettings
-            {
-                Encoding = new System.Text.UTF8Encoding(false),
-                Indent = true,
-                IndentChars = " ",
-            };
-
-            using (var writer = XmlWriter.Create("mailsettings.xml", xws))
-            {
-                var serializer = new DataContractSerializer(settings.GetType());
-                serializer.WriteObject(writer, settings);
-            }
-
-                this.Close();
+            this.Close();
         }
 
         //適用ボタン
@@ -71,11 +58,18 @@ namespace SendMail
         //送信データ登録
         private void SettingRegist()
         {
-            settings.Host = tbHost.Text;
-            settings.Pass = tbPass.Text;
-            settings.Port = int.Parse(tbPort.Text);
-            settings.MailAddr = tbUserName.Text;
-            settings.Ssl = cbSsl.Checked;
+            
+        }
+
+        //設定画面をロードすると一度だけ実行されるイベントハンドラ
+        private void ConfigForm_Load(object sender, EventArgs e)
+        {
+            tbHost.Text = settings.Host;
+            tbPort.Text = settings.Port.ToString();
+            tbUserName.Text = settings.MailAddr;
+            tbPass.Text = settings.Pass;
+            cbSsl.Checked = settings.Ssl;
+            tbSender.Text = settings.MailAddr;
         }
     }
 }

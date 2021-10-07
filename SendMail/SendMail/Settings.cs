@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.Serialization;
 using System.Text;
 using System.Threading.Tasks;
+using System.Xml;
 
 namespace SendMail
 {
@@ -17,7 +19,10 @@ namespace SendMail
         public bool Ssl { get; set; }   //SSL
 
         //コンストラクタ
-        private Settings(){}
+        private Settings()
+        {
+        
+        }
 
         //インストラクタの取得
         public static Settings getInstance()
@@ -25,8 +30,46 @@ namespace SendMail
             if (instance == null)
             {
                 instance = new Settings();
+
+
+                //XMLファイルを読み込み（逆シリアル化）【P303参照】
+                using (var reader = XmlReader.Create("mailsetting.xml"))
+                {
+                    var serializer = new DataContractSerializer(typeof(Settings));
+                    var readSettings = serializer.ReadObject(reader) as Settings;
+
+                    instance.Host = readSettings.Host;
+                    instance.Port = readSettings.Port;
+                    instance.MailAddr = readSettings.MailAddr;
+                    instance.Pass = readSettings.Pass;
+                    instance.Ssl = readSettings.Ssl;
+                }
             }
             return instance;
+        }
+
+        //送信データ登録 (インターフェース)
+        public void setSendConfig(string host, string port, string mailaddr, string pass, bool ssl)
+        {
+            Host = host;
+            Pass = pass;
+            Mailaddr = mailaddr;
+            Port = port;
+            Ssl = ssl;
+
+            //XMLファイルへ書き出し（シリアル化）【P302参照】
+            var xws = new XmlWriterSettings
+            {
+                Encoding = new System.Text.UTF8Encoding(false),
+                Indent = true,
+                IndentChars = " ",
+            };
+
+            using (var writer = XmlWriter.Create("mailsetting.xml", xws))
+            {
+                var serializer = new DataContractSerializer(settings.GetType());
+                serializer.WriteObject(writer, settings);
+            }
         }
 
         //初期値
