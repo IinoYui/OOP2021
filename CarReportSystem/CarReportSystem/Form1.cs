@@ -38,7 +38,7 @@ namespace CarReportSystem {
         //追加ボタン
         private void btDateAdd_Click(object sender, EventArgs e) {
 
-            if(cbAuther.Text == "" || cbCarName.Text == "") {
+            if (cbAuther.Text == "" || cbCarName.Text == "") {
                 MessageBox.Show("入力されていません");
                 return;
             }
@@ -85,7 +85,7 @@ namespace CarReportSystem {
         private void dgvRegistDate_MouseClick(object sender, DataGridViewCellEventArgs e) {
             if (e.RowIndex == -1)
                 return;
-        
+
             //選択された行のデータの取得
             CarReport selectedCar = listCarReport[e.RowIndex];
 
@@ -97,7 +97,7 @@ namespace CarReportSystem {
             tbReport.Text = selectedCar.Report;
             pbPicture.Image = selectedCar.Picture;
         }
-        
+
 
         private void setMakerRadioButton(CarReport.MakerGroup mg) {
             switch (mg) {
@@ -128,8 +128,8 @@ namespace CarReportSystem {
 
         private void btDateCorrect_Click(object sender, EventArgs e) {
             //listCarReport[dgvRegistDate.CurrentRow.Index].UpDate(dtpDate.Value, cbAuther.Text, 
-                                    //selectedGroup(),cbCarName.Text,
-                                    //tbReport.Text,pbPicture.Image);
+            //selectedGroup(),cbCarName.Text,
+            //tbReport.Text,pbPicture.Image);
 
             //dgvRegistDate.Refresh();   //コントロールの強制再評価
         }
@@ -143,6 +143,7 @@ namespace CarReportSystem {
             carReportDataGridView.CurrentRow.Cells[3].Value = selectedGroup().ToString();  //メーカー
             carReportDataGridView.CurrentRow.Cells[4].Value = cbCarName.Text; //車名
             carReportDataGridView.CurrentRow.Cells[5].Value = tbReport.Text; //レポート
+            carReportDataGridView.CurrentRow.Cells[6].Value = pbPicture.Image;  //画像
 
             //データベースへ反映
             this.Validate();
@@ -162,6 +163,8 @@ namespace CarReportSystem {
         private void btConnect_Click(object sender, EventArgs e) {
             // TODO: このコード行はデータを 'infosys202113DataSet.CarReport' テーブルに読み込みます。必要に応じて移動、または削除をしてください。
             this.carReportTableAdapter.Fill(this.infosys202113DataSet.CarReport);
+
+
 
 
 #if false
@@ -196,7 +199,7 @@ namespace CarReportSystem {
         }
 
         private void FormMain_Load(object sender, EventArgs e) {
-           // dgvRegistDate.Columns[5].Visible = false;
+            // dgvRegistDate.Columns[5].Visible = false;
         }
 
         private void carReportBindingNavigatorSaveItem_Click(object sender, EventArgs e)
@@ -207,10 +210,42 @@ namespace CarReportSystem {
 
         }
 
-        private void carReportDataGridView_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        private void carReportDataGridView_SelectionClick(object sender, EventArgs e)
         {
+            if (carReportDataGridView.CurrentRow == null) return;
+            try {
+                dtpDate.Value = (DateTime)carReportDataGridView.CurrentRow.Cells[1].Value;  //日付
+                cbAuther.Text = carReportDataGridView.CurrentRow.Cells[2].Value.ToString();  //記録者
+                setMakerRadioButton(
+                    (CarReport.MakerGroup)Enum.Parse(typeof(CarReport.MakerGroup),carReportDataGridView.CurrentRow.Cells[3].Value.ToString())
+                     );  
+                        //メーカー（文字列→列挙型）
 
+                cbCarName.Text = carReportDataGridView.CurrentRow.Cells[4].Value.ToString(); //車名
+                tbReport.Text = carReportDataGridView.CurrentRow.Cells[5].Value.ToString(); //レポート
+                pbPicture.Image = ByteArraToImage((byte[])carReportDataGridView.CurrentRow.Cells[6].Value);  //画像
+            }
+            catch (Exception) {
+                pbPicture.Image = null;
+            }
         }
+
+        //バイト配列をImageオブジェクトに変換
+        private Image ByteArraToImage(byte[] b)
+        {
+                ImageConverter imgconv = new ImageConverter();
+                Image img = (Image)imgconv.ConvertFrom(b);
+                return img;
+        }
+
+        //Imageオブジェクトをバイト配列に変換
+        public static byte[] ImageToByteArray(Image img)
+        {
+            ImageConverter imgcov = new ImageConverter();
+            byte[] b = (byte[])imgconv.ConcertTo(imgcov, typeof(byte[]));
+            return b;
+        }
+
     }
 }
 

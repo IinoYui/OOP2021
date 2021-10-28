@@ -64,10 +64,10 @@ namespace AddressBock
             //０件なら処理をしない
             if (personDataGridView.Rows.Count != 0)
             {
-                tbName.Text = personDataGridView.CurrentRow.Cells[1].Value.ToString();
-                dtpDate.Value = (DateTime)personDataGridView.CurrentRow.Cells[2].Value;
-                tbTelephone.Text = personDataGridView.CurrentRow.Cells[3].Value.ToString();
-                tbMemo.Text = personDataGridView.CurrentRow.Cells[4].Value.ToString();
+                tbName.Text = personDataGridView.CurrentRow.Cells[1].Value.ToString();  //名前
+                dtpDate.Value = (DateTime)personDataGridView.CurrentRow.Cells[2].Value;  //誕生日
+                tbTelephone.Text = personDataGridView.CurrentRow.Cells[3].Value.ToString();  //電話番号
+                tbMemo.Text = personDataGridView.CurrentRow.Cells[4].Value.ToString();  //備考
             }
         }
 
@@ -79,6 +79,11 @@ namespace AddressBock
         private void button1_Click(object sender, EventArgs e)
         {
             this.personTableAdapter.FillByBirthday(this.infosys202113DataSet.Person, dateTimePicker1.Text);
+        }
+
+        private void personDataGridView_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+
         }
     }
 }
