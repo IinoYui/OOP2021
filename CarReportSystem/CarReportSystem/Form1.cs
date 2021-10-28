@@ -16,7 +16,7 @@ namespace CarReportSystem {
 
         public FormMain() {
             InitializeComponent();
-            dgvRegistDate.DataSource = listCarReport;
+            //dgvRegistDate.DataSource = listCarReport;
         }
 
         private void btExit_Click(object sender, EventArgs e) {
@@ -123,27 +123,48 @@ namespace CarReportSystem {
         }
 
         private void btDateDelete_Click(object sender, EventArgs e) {
-            listCarReport.RemoveAt( dgvRegistDate.CurrentRow.Index);
+            //listCarReport.RemoveAt( dgvRegistDate.CurrentRow.Index);
         }
 
         private void btDateCorrect_Click(object sender, EventArgs e) {
-            listCarReport[dgvRegistDate.CurrentRow.Index].UpDate(dtpDate.Value, cbAuther.Text, 
-                                    selectedGroup(),cbCarName.Text,
-                                    tbReport.Text,pbPicture.Image);
+            //listCarReport[dgvRegistDate.CurrentRow.Index].UpDate(dtpDate.Value, cbAuther.Text, 
+                                    //selectedGroup(),cbCarName.Text,
+                                    //tbReport.Text,pbPicture.Image);
 
-            dgvRegistDate.Refresh();   //コントロールの強制再評価
+            //dgvRegistDate.Refresh();   //コントロールの強制再評価
         }
 
-        private void btSave_Click(object sender, EventArgs e) {
+        //更新ボタンイベント処理
+        private void btUpdate_Click(object sender, EventArgs e) {
+            if (carReportDataGridView.CurrentRow == null) return;
+
+            carReportDataGridView.CurrentRow.Cells[1].Value = dtpDate.Value;   //日付
+            carReportDataGridView.CurrentRow.Cells[2].Value = cbAuther.Text;  //記録者
+            carReportDataGridView.CurrentRow.Cells[3].Value = selectedGroup().ToString();  //メーカー
+            carReportDataGridView.CurrentRow.Cells[4].Value = cbCarName.Text; //車名
+            carReportDataGridView.CurrentRow.Cells[5].Value = tbReport.Text; //レポート
+
+            //データベースへ反映
+            this.Validate();
+            this.carReportBindingSource.EndEdit();
+            this.tableAdapterManager.UpdateAll(this.infosys202113DataSet);
+#if false
+
             if(sfdFileSave.ShowDialog() == DialogResult.OK) {
                 var bf = new BinaryFormatter();
                 using (FileStream fs = File.Open(sfdFileSave.FileName, FileMode.Create)) {
                     bf.Serialize(fs, listCarReport);
                 }
             }
+#endif
         }
 
-        private void btOpen_Click(object sender, EventArgs e) {
+        private void btConnect_Click(object sender, EventArgs e) {
+            // TODO: このコード行はデータを 'infosys202113DataSet.CarReport' テーブルに読み込みます。必要に応じて移動、または削除をしてください。
+            this.carReportTableAdapter.Fill(this.infosys202113DataSet.CarReport);
+
+
+#if false
             if(ofdFileOpen.ShowDialog() == DialogResult.OK) {
                 try {
                     //バイナリ形式でシリアル化
@@ -170,10 +191,25 @@ namespace CarReportSystem {
                     setCbCarName(dgvRegidtData.Rows[i].Cells[3].Value.ToString());
                 }*/
             }
+
+#endif
         }
 
         private void FormMain_Load(object sender, EventArgs e) {
-            dgvRegistDate.Columns[5].Visible = false;
+           // dgvRegistDate.Columns[5].Visible = false;
+        }
+
+        private void carReportBindingNavigatorSaveItem_Click(object sender, EventArgs e)
+        {
+            this.Validate();
+            this.carReportBindingSource.EndEdit();
+            this.tableAdapterManager.UpdateAll(this.infosys202113DataSet);
+
+        }
+
+        private void carReportDataGridView_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+
         }
     }
 }
