@@ -80,10 +80,5 @@ namespace AddressBock
         {
             this.personTableAdapter.FillByBirthday(this.infosys202113DataSet.Person, dateTimePicker1.Text);
         }
-
-        private void personDataGridView_CellContentClick(object sender, DataGridViewCellEventArgs e)
-        {
-
-        }
     }
 }

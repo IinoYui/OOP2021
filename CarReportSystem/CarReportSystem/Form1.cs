@@ -82,6 +82,7 @@ namespace CarReportSystem {
             }
         }
 
+        //いらない
         private void dgvRegistDate_MouseClick(object sender, DataGridViewCellEventArgs e) {
             if (e.RowIndex == -1)
                 return;
@@ -122,10 +123,12 @@ namespace CarReportSystem {
             }
         }
 
+        //いらない
         private void btDateDelete_Click(object sender, EventArgs e) {
             //listCarReport.RemoveAt( dgvRegistDate.CurrentRow.Index);
         }
 
+        //いらない
         private void btDateCorrect_Click(object sender, EventArgs e) {
             //listCarReport[dgvRegistDate.CurrentRow.Index].UpDate(dtpDate.Value, cbAuther.Text, 
             //selectedGroup(),cbCarName.Text,
@@ -140,10 +143,10 @@ namespace CarReportSystem {
 
             carReportDataGridView.CurrentRow.Cells[1].Value = dtpDate.Value;   //日付
             carReportDataGridView.CurrentRow.Cells[2].Value = cbAuther.Text;  //記録者
-            carReportDataGridView.CurrentRow.Cells[3].Value = selectedGroup().ToString();  //メーカー
+            carReportDataGridView.CurrentRow.Cells[3].Value = selectedGroup();  //メーカー
             carReportDataGridView.CurrentRow.Cells[4].Value = cbCarName.Text; //車名
             carReportDataGridView.CurrentRow.Cells[5].Value = tbReport.Text; //レポート
-            carReportDataGridView.CurrentRow.Cells[6].Value = pbPicture.Image;  //画像
+            carReportDataGridView.CurrentRow.Cells[6].Value = ImageToByteArray(pbPicture.Image);  //画像
 
             //データベースへ反映
             this.Validate();
@@ -163,10 +166,11 @@ namespace CarReportSystem {
         private void btConnect_Click(object sender, EventArgs e) {
             // TODO: このコード行はデータを 'infosys202113DataSet.CarReport' テーブルに読み込みます。必要に応じて移動、または削除をしてください。
             this.carReportTableAdapter.Fill(this.infosys202113DataSet.CarReport);
-
-
-
-
+            foreach (var info in this.infosys202113DataSet.CarReport)
+            {
+                setCbAuthor(info.Author);
+                setCbCarName(info.CarName);
+            }
 #if false
             if(ofdFileOpen.ShowDialog() == DialogResult.OK) {
                 try {
@@ -199,7 +203,14 @@ namespace CarReportSystem {
         }
 
         private void FormMain_Load(object sender, EventArgs e) {
-            // dgvRegistDate.Columns[5].Visible = false;
+            carReportDataGridView.Columns[0].Visible = false;
+            carReportDataGridView.Columns[1].HeaderText = "日付";
+            carReportDataGridView.Columns[2].HeaderText = "記録者";
+            carReportDataGridView.Columns[3].HeaderText = "メーカー";
+            carReportDataGridView.Columns[4].HeaderText = "車名";
+            carReportDataGridView.Columns[5].HeaderText = "レポート";
+            carReportDataGridView.Columns[6].Visible = false;
+            //ssErrorlabel.Text = "";
         }
 
         private void carReportBindingNavigatorSaveItem_Click(object sender, EventArgs e)
@@ -214,6 +225,8 @@ namespace CarReportSystem {
         {
             if (carReportDataGridView.CurrentRow == null) return;
             try {
+
+
                 dtpDate.Value = (DateTime)carReportDataGridView.CurrentRow.Cells[1].Value;  //日付
                 cbAuther.Text = carReportDataGridView.CurrentRow.Cells[2].Value.ToString();  //記録者
                 setMakerRadioButton(
@@ -223,29 +236,66 @@ namespace CarReportSystem {
 
                 cbCarName.Text = carReportDataGridView.CurrentRow.Cells[4].Value.ToString(); //車名
                 tbReport.Text = carReportDataGridView.CurrentRow.Cells[5].Value.ToString(); //レポート
-                pbPicture.Image = ByteArraToImage((byte[])carReportDataGridView.CurrentRow.Cells[6].Value);  //画像
+                pbPicture.Image = ByteArrayToImage((byte[])carReportDataGridView.CurrentRow.Cells[6].Value);
+                //var mk = (CarReport.MakerGroup)Enum.Parse(typeof(CarReport.MakerGroup), carReportDataGridView.CurrentRow.Cells[5].ToString());
+                //setMakerRadioButton(mk);
+                //var img = (byte[])carReportDataGridView.CurrentRow.Cells[6].Value;
+                //if(img.Length > 0)
+                //{
+                //    pbPicture.Image = ByteArrayToImage((byte[])carReportDataGridView.CurrentRow.Cells[6].Value);   //画像
+                //}
             }
-            catch (Exception) {
+            //catch (ArgmentException) {
+            //    setMakerRadioButton(CarReport.MakerGroup.その他);
+            //}
+            catch(InvalidCastException)
+            {
                 pbPicture.Image = null;
             }
+            catch(Exception ex)
+            {
+                //MessageBox.Show(ex.Message);
+                ssErrorlabel.Text = ex.Message; //ステータスエリアに表示する
+            }
         }
 
-        //バイト配列をImageオブジェクトに変換
-        private Image ByteArraToImage(byte[] b)
+        // バイト配列をImageオブジェクトに変換
+        public static Image ByteArrayToImage(byte[] b)
         {
+            Image img = null;
+            if (b.Length > 0)
+            {
                 ImageConverter imgconv = new ImageConverter();
-                Image img = (Image)imgconv.ConvertFrom(b);
-                return img;
+                img = (Image)imgconv.ConvertFrom(b);
+            }
+            return img;
         }
 
-        //Imageオブジェクトをバイト配列に変換
+        // Imageオブジェクトをバイト配列に変換
         public static byte[] ImageToByteArray(Image img)
         {
-            ImageConverter imgcov = new ImageConverter();
-            byte[] b = (byte[])imgconv.ConcertTo(imgcov, typeof(byte[]));
+            ImageConverter imgconv = new ImageConverter();
+            byte[] b = (byte[])imgconv.ConvertTo(img, typeof(byte[]));
             return b;
         }
 
+        private void bindingNavigatorAddNewItem_Click(object sender, EventArgs e)
+        {
+
+            dtpDate.Value = DateTime.Now;
+            cbAuther.Text = "";
+            cbCarName.Text = "";
+            tbReport.Text = "";
+            setMakerRadioButton(CarReport.MakerGroup.その他);
+            pbPicture.Image = null;
+        }
+
+        private void pbPicture_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        
     }
 }
 

@@ -79,7 +79,6 @@ namespace AddressBock
             this.personDataGridView.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.personDataGridView.Size = new System.Drawing.Size(594, 188);
             this.personDataGridView.TabIndex = 1;
-            this.personDataGridView.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.personDataGridView_CellContentClick);
             this.personDataGridView.SelectionChanged += new System.EventHandler(this.personDataGridView_SelectionChanged);
             // 
             // noDataGridViewTextBoxColumn
