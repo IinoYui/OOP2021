@@ -5,8 +5,8 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:NumberGame"
         mc:Ignorable="d"
-        Title="MainWindow" Height="750" Width="706">
-    <Grid Margin="0,21,2,-15">
+        Title="MainWindow" Height="913" Width="706">
+    <Grid Margin="0,21,2,201">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="57*"/>
             <ColumnDefinition Width="23*"/>
@@ -42,7 +42,7 @@
         <Button x:Name="bt24" Content="24" HorizontalAlignment="Left" FontSize="50" Height="150" VerticalAlignment="Top" Width="150" Margin="396,490,0,0" Click="Button_Click" Grid.ColumnSpan="2"/>
         <Button x:Name="bt25" Content="25" HorizontalAlignment="Left" FontSize="50" Height="150" VerticalAlignment="Top" Width="150" Margin="50,490,0,0" Click="Button_Click" Grid.Column="1"/>
 
-        <StackPanel>
+        <StackPanel Margin="-54,-110,0,0">
             <Grid  x:Name="grid">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="*"/>
