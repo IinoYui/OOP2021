@@ -4,6 +4,7 @@ using System.Linq;
 using System.Runtime.Serialization;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 using System.Xml;
 
 namespace SendMail
@@ -27,33 +28,39 @@ namespace SendMail
         //インストラクタの取得
         public static Settings getInstance()
         {
-            if (instance == null)
+            try
             {
-                instance = new Settings();
-
-
-                //XMLファイルを読み込み（逆シリアル化）【P303参照】
-                using (var reader = XmlReader.Create("mailsetting.xml"))
+                if (instance == null)
                 {
-                    var serializer = new DataContractSerializer(typeof(Settings));
-                    var readSettings = serializer.ReadObject(reader) as Settings;
+                    instance = new Settings();
 
-                    instance.Host = readSettings.Host;
-                    instance.Port = readSettings.Port;
-                    instance.MailAddr = readSettings.MailAddr;
-                    instance.Pass = readSettings.Pass;
-                    instance.Ssl = readSettings.Ssl;
+
+                    //XMLファイルを読み込み（逆シリアル化）【P303参照】
+                    using (var reader = XmlReader.Create("mailsetting.xml"))
+                    {
+                        var serializer = new DataContractSerializer(typeof(Settings));
+                        var readSettings = serializer.ReadObject(reader) as Settings;
+
+                        instance.Host = readSettings.Host;
+                        instance.Port = readSettings.Port;
+                        instance.MailAddr = readSettings.MailAddr;
+                        instance.Pass = readSettings.Pass;
+                        instance.Ssl = readSettings.Ssl;
+                    }
                 }
+            }catch(Exception ex)
+            {
+                MessageBox.Show(ex.Message);
             }
             return instance;
         }
 
         //送信データ登録 (インターフェース)
-        public void setSendConfig(string host, string port, string mailaddr, string pass, bool ssl)
+        public void setSendConfig(string host, int port, string mailaddr, string pass, bool ssl)
         {
             Host = host;
             Pass = pass;
-            Mailaddr = mailaddr;
+            MailAddr = mailaddr;
             Port = port;
             Ssl = ssl;
 
@@ -67,9 +74,10 @@ namespace SendMail
 
             using (var writer = XmlWriter.Create("mailsetting.xml", xws))
             {
-                var serializer = new DataContractSerializer(settings.GetType());
-                serializer.WriteObject(writer, settings);
+                var serializer = new DataContractSerializer(this.GetType());
+                serializer.WriteObject(writer, this);
             }
+            
         }
 
         //初期値

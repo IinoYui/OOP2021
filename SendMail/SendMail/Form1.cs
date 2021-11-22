@@ -20,7 +20,7 @@ namespace SendMail
         private ConfigForm configform = new ConfigForm();
 
         //設定情報
-        private Settings settings = Settings.getInstance();
+        private Settings settings;
 
         public Form1()
         {
@@ -102,18 +102,19 @@ namespace SendMail
 
         private void Form1_Load(object sender, EventArgs e)
         {
-            //XMLファイルを読み込み（逆シリアル化）【P303参照】
-            using (var reader = XmlReader.Create("mailsetting.xml"))
-            {
-                var serializer = new DataContractSerializer(typeof(Settings));
-                var readSettings = serializer.ReadObject(reader) as Settings;
-                
-                settings.Host = readSettings.Host;
-                settings.Port = readSettings.Port;
-                settings.MailAddr = readSettings.MailAddr;
-                settings.Pass = readSettings.Pass;
-                settings.Ssl = readSettings.Ssl;
-            }
+            ////XMLファイルを読み込み（逆シリアル化）【P303参照】
+            //using (var reader = XmlReader.Create("mailsetting.xml"))
+            //{
+            //    var serializer = new DataContractSerializer(typeof(Settings));
+            //    var readSettings = serializer.ReadObject(reader) as Settings;
+
+            //    settings.Host = readSettings.Host;
+            //    settings.Port = readSettings.Port;
+            //    settings.MailAddr = readSettings.MailAddr;
+            //    settings.Pass = readSettings.Pass;
+            //    settings.Ssl = readSettings.Ssl;
+            //}
+            settings = Settings.getInstance();
         }
     }
 }

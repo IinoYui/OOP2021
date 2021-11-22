@@ -14,7 +14,7 @@ namespace SendMail
 {
     public partial class ConfigForm : Form
     {
-        
+
         //設定情報
         private Settings settings = Settings.getInstance();
 
@@ -45,15 +45,25 @@ namespace SendMail
         //OKボタン
         private void btOk_Click(object sender, EventArgs e)
         {
-            SettingRegist();
+            this.btApply_Click(sender, e);
             this.Close();
         }
 
         //適用ボタン
         private void btApply_Click(object sender, EventArgs e)
         {
-            SettingRegist();//送信データ登録
+            try
+            {
+                settings.setSendConfig(tbHost.Text, int.Parse(tbPort.Text), tbUserName.Text, tbPass.Text, cbSsl.Checked);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+
+            //SettingRegist();//送信データ登録
         }
+    
 
         //送信データ登録
         private void SettingRegist()
