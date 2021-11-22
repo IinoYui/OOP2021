@@ -8,7 +8,8 @@ using System.Xml;
 
 namespace SendMail
 {
-    class Settings
+    [Serializable]
+    public class Settings
     {
         private static Settings instance = null;
 
@@ -33,17 +34,17 @@ namespace SendMail
 
 
                 //XMLファイルを読み込み（逆シリアル化）【P303参照】
-                using (var reader = XmlReader.Create("mailsetting.xml"))
-                {
-                    var serializer = new DataContractSerializer(typeof(Settings));
-                    var readSettings = serializer.ReadObject(reader) as Settings;
+                //using (var reader = XmlReader.Create("mailsetting.xml"))
+                //{
+                //    var serializer = new DataContractSerializer(typeof(Settings));
+                //    var readSettings = serializer.ReadObject(reader) as Settings;
 
-                    instance.Host = readSettings.Host;
-                    instance.Port = readSettings.Port;
-                    instance.MailAddr = readSettings.MailAddr;
-                    instance.Pass = readSettings.Pass;
-                    instance.Ssl = readSettings.Ssl;
-                }
+                //    instance.Host = readSettings.Host;
+                //    instance.Port = readSettings.Port;
+                //    instance.MailAddr = readSettings.MailAddr;
+                //    instance.Pass = readSettings.Pass;
+                //    instance.Ssl = readSettings.Ssl;
+                //}
             }
             return instance;
         }
@@ -53,8 +54,8 @@ namespace SendMail
         {
             Host = host;
             Pass = pass;
-            Mailaddr = mailaddr;
-            Port = port;
+            MailAddr = mailaddr;
+            Port = int.Parse(port);
             Ssl = ssl;
 
             //XMLファイルへ書き出し（シリアル化）【P302参照】
@@ -67,8 +68,8 @@ namespace SendMail
 
             using (var writer = XmlWriter.Create("mailsetting.xml", xws))
             {
-                var serializer = new DataContractSerializer(settings.GetType());
-                serializer.WriteObject(writer, settings);
+                var serializer = new DataContractSerializer(getInstance().GetType());
+                serializer.WriteObject(writer, getInstance());
             }
         }
 

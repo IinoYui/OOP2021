@@ -9,6 +9,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Xml;
+using System.Xml.Linq;
 
 namespace SendMail
 {
@@ -58,7 +59,8 @@ namespace SendMail
         //送信データ登録
         private void SettingRegist()
         {
-            
+            var xdoc = XDocument.Load("novelists.xml");
+            xdoc.Save("newNovelists.xml");
         }
 
         //設定画面をロードすると一度だけ実行されるイベントハンドラ

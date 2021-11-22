@@ -255,7 +255,7 @@ namespace CarReportSystem {
             catch(Exception ex)
             {
                 //MessageBox.Show(ex.Message);
-                ssErrorlabel.Text = ex.Message; //ステータスエリアに表示する
+                //ssErrorlabel.Text = ex.Message; //ステータスエリアに表示する
             }
         }
 
@@ -295,7 +295,24 @@ namespace CarReportSystem {
 
         }
 
-        
+        private void carReportDataGridView_CellClick(object sender, DataGridViewCellEventArgs e)
+        {
+            if(e.RowIndex == -1)
+            {
+                return;
+            }
+
+            //選択された行のデータを取得
+            CarReport selectedCar = listCarReport[e.RowIndex];
+
+            //取得したデータ項目を各コントロールへ設定
+            dtpDate.Value = selectedCar.Date;
+            cbAuther.Text = selectedCar.Auther;
+            setMakerRadioButton(selectedCar.Maker);
+            cbCarName.Text = selectedCar.CarName;
+            tbReport.Text = selectedCar.Report;
+            pbPicture.Image = selectedCar.Picture;
+        }
     }
 }
 
